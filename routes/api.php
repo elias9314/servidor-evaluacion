@@ -131,3 +131,6 @@ Route::get('/prueba', 'PruebasController@a')->middleware('auth:api');
 
 Route::get('/v2/estudiantes', 'GenericoController@getEstudiantes');
 Route::post('/v2/prueba_crud', 'GenericoController@createCRUD');
+
+
+Route::get('/tipo_evaluacion','TipoEvaluacionesController@getTipoEvaluacion');
