@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateEvaPreguntasTable extends Migration
+class CreateEvaRespuestasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateEvaPreguntasTable extends Migration
      */
     public function up()
     {
-        Schema::create('eva_preguntas', function (Blueprint $table) {
+        Schema::create('eva_respuestas', function (Blueprint $table) {
             $table->bigIncrements('id');
-
             $table->string('codigo', 100);
             $table->integer('orden');
             $table->string('nombre', 200);
-            $table->string('tipo', 50);
-            $table->integer('cantidad_respuestas')->default(4);
+            $table->string('valor', 200);
+            $table->string('tipo', 100);
             $table->string('estado', 20)->default('ACTIVO');
             $table->timestamps();
         });
@@ -33,6 +32,6 @@ class CreateEvaPreguntasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('eva_preguntas');
+        Schema::dropIfExists('eva_respuestas');
     }
 }
