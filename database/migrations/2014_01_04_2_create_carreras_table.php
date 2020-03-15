@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;  
     
-class CreateCarrerasTable extends Migration
+class CreateCarrerasTable extends Migration 
 {
     /**
      * Run the migrations.
