@@ -15,7 +15,8 @@ class CreateEvaPreguntasTable extends Migration
     {
         Schema::create('eva_preguntas', function (Blueprint $table) {
             $table->bigIncrements('id');
-
+            $table->integer('tipo_evaluacion_id')->nullable();
+            $table->foreign('tipo_evaluacion_id')->references('id')->on('tipo_evaluaciones');
             $table->string('codigo', 100);
             $table->integer('orden');
             $table->string('nombre', 200);
