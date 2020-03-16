@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TipoEvaluacion extends Model
 {
-    protected  $table='tipo_evaluaciones';        
+    protected  $table='tipo_evaluaciones';
     protected $fillable = [
         'nombre', 'evaluacion', 'estado',
     ];
