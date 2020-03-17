@@ -10,4 +10,9 @@ class TipoEvaluacion extends Model
     protected $fillable = [
         'nombre', 'evaluacion', 'estado',
     ];
+
+    public function preguntas()
+    {
+        return $this->hasMany('App\EvaPregunta');
+    }
 }
