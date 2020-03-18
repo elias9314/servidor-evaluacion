@@ -140,4 +140,4 @@ Route::put('/tipo_evaluaciones','TipoEvaluacionesController@updateTipoEvaluacion
 ///////////Rutas evaluacion preguntas///////////////////////
 Route::get('/evaluacion_preguntas','EvaPreguntasController@getPreguntas');
 Route::get('/evaluacion_preguntas/{id}','EvaPreguntasController@getById');
-Route::post('/evaluacion_preguntas','EvaPreguntasController@createPregunta');
+Route::post('/evaluacion_preguntass','EvaPreguntasController@createPregunta');

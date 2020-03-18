@@ -11,7 +11,7 @@ class TipoEvaluacion extends Model
         'nombre', 'evaluacion', 'estado',
     ];
 
-    public function preguntas()
+    public function pregunta()
     {
         return $this->hasMany('App\EvaPregunta');
     }
