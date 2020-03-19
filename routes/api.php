@@ -146,7 +146,6 @@ Route::put('/eva_respuestas','EvaRespuestasController@updateEvaRespuesta');
 ///////////Rutas evaluacion preguntas///////////////////////
 Route::get('/evaluacion_preguntas','EvaPreguntasController@getPreguntas');
 Route::get('/evaluacion_preguntas/{id}','EvaPreguntasController@getById');
-
 Route::post('/evaluacion_preguntas','EvaPreguntasController@createPregunta');
-
+Route::put('/evaluacion_preguntas','EvaPreguntasController@updatePregunta');
 

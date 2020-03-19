@@ -40,4 +40,21 @@ class EvaPreguntasController extends Controller
     }
 
 
+    public function updatePregunta(Request $request){
+        $data=$request->json()->all();
+        $dataPregunta =$data['eva_preguntas'];
+        $dataTipoEvaluacion= $data['tipo_evaluaciones'];
+        $evaluacion=TipoEvaluacion::find($dataTipoEvaluacion['id']);
+        $pregunta=EvaPregunta::find($dataPregunta['id']);
+        $response = $pregunta->update([
+            'codigo'=>$dataPregunta['codigo'],
+            'orden'=>$dataPregunta['orden'],
+            'nombre'=>$dataPregunta['nombre'],
+            'tipo'=>$dataPregunta['tipo'],
+            'estado'=>$dataPregunta['estado']
+        ]);
+        $pregunta->tipo_evaluacion()->associate($evaluacion);
+        $pregunta->save();
+        return response()->json($response,200);
+    }
 }
