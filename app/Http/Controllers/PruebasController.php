@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Carrera;
+use App\User;
+use Illuminate\Support\Facades\Hash;
 use App\Estudiante;
 use App\Malla;
 use App\Matricula;
@@ -25,6 +27,16 @@ class PruebasController extends Controller
         //
     }
 
+    public function compararClaves(Request $request){
+        
+        $user = User::where('user_name',$request->user_name)->first();
+        return response()->json( Hash::check($request->clave,$user->password));
+    }
+
+    public function generarClave(Request $request){
+        
+        return  Hash::make($request->clave);
+    }
     public function a()
     {
         $estudiante = Estudiante::findOrFail(1)->update(['tipo_identificacion' => '0']);

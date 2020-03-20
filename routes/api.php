@@ -149,3 +149,6 @@ Route::get('/evaluacion_preguntas/{id}','EvaPreguntasController@getById');
 Route::post('/evaluacion_preguntas','EvaPreguntasController@createPregunta');
 Route::put('/evaluacion_preguntas','EvaPreguntasController@updatePregunta');
 
+Route::get('/comparar_claves','PruebasController@compararClaves');
+Route::get('/generar_clave','PruebasController@generarClave');
+
