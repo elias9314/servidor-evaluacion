@@ -8,7 +8,7 @@ class TipoEvaluacionesController extends Controller
 {
     public function getTipoEvaluacion(){
         $evaluacion= TipoEvaluacion::all();
-        return response()->json([$evaluacion],200);
+        return response()->json($evaluacion,200);
     }
     public function getById($id){
         $evaluacion = TipoEvaluacion::where('id','=',$id)->get();
