@@ -151,4 +151,12 @@ Route::put('/evaluacion_preguntas','EvaPreguntasController@updatePregunta');
 
 Route::get('/comparar_claves','PruebasController@compararClaves');
 Route::get('/generar_clave','PruebasController@generarClave');
+///////////Docentes///////////////////////
+
+Route:: get('/docentes','DocentesController@getDocente');
+Route::get('/docentes/{id}','DocentesController@getById');
+Route::post('/docentes','DocentesController@createDocente');
+Route::put('/docentes','DocentesController@updateDocente');
+
+
 
