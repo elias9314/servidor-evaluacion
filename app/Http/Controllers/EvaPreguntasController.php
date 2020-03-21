@@ -9,7 +9,7 @@ class EvaPreguntasController extends Controller
 {
     public function getPreguntas(){
         $preguntas=EvaPregunta::all();
-        return response()->json([$preguntas],200);
+        return response()->json($preguntas,200);
     }
 
     public function getById($id){
