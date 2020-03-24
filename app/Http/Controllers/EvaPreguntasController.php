@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\TipoEvaluacion;
 use Illuminate\Http\Request;
 use App\EvaPregunta;
+
 class EvaPreguntasController extends Controller
 {
     public function getPreguntas(){
-        $preguntas=EvaPregunta::all();
-        return response()->json($preguntas,200);
+        $preguntas=EvaPregunta::with('tipo_evaluacion')->get();
+        return response()->json(['preguntas'=>$preguntas],200);
     }
 
     public function getById($id){
@@ -18,7 +19,6 @@ class EvaPreguntasController extends Controller
     }
 
     public function createPregunta(Request $request){
-
         // $dataPregunta=$data;
          //$pregunta=EvaPregunta::create([
           //   'tipo_evaluacion_id'=>$dataPregunta['tipo_evaluacion_id'],
@@ -38,8 +38,8 @@ class EvaPreguntasController extends Controller
            // return response()->json(['message'=>'pregunta creada correctamente'],200);
         return response()->json([$response],200);
         }
-    
-    
+
+
     public function updatePregunta(Request $request){
             $data=$request->json()->all();
             $dataPregunta =$data['eva_preguntas'];
