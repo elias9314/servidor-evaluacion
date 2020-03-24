@@ -8,22 +8,35 @@ class TipoEvaluacionesController extends Controller
 {
     public function getTipoEvaluacion(){
         $evaluacion= TipoEvaluacion::all();
-        return response()->json($evaluacion,200);
+        return response()->json(['tipo'=>$evaluacion],200);
     }
     public function getById($id){
         $evaluacion = TipoEvaluacion::where('id','=',$id)->get();
-        return response()->json(['tipo evaluacion'=> $evaluacion],200);
+        return response()->json(['tipo_evaluacion'=> $evaluacion],200);
     }
     public function createTipoEvaluacion(Request $request){
+      //  $data = $request->json()->all();
+       // TipoEvaluacion::create($data);
+        //return response()->json(['tipo'=>$data],200);
         $data = $request->json()->all();
-        TipoEvaluacion::create($data);
-        return response()->json(['message'=>'Tipo de evaluacion creado correctamente'],200);
+        $dataTipoEvaluacion=$data['tipo_evaluacion'];
+        $tipoEvaluacion=TipoEvaluacion::create([
+            'nombre' => $dataTipoEvaluacion['nombre'],
+            'evaluacion' => $dataTipoEvaluacion['evaluacion'],
+            'estado' => $dataTipoEvaluacion['estado'],
+        ]);
+        return response()->json(['tipo_evaluacion' => $tipoEvaluacion], 200);
     }
     public function updateTipoEvaluacion(Request $request){
         $data=$request->json()->all();
-        $evaluacion= TipoEvaluacion::findOrFail($data['id']);
-        $evaluacion->update($data);
-        return response()->json([$evaluacion],200);
+        $dataTipoEvaluacion=$data['tipo_evaluacion'];
+        $evaluacion= TipoEvaluacion::findOrFail($dataTipoEvaluacion['id'])->update([
+            'nombre'=>$dataTipoEvaluacion['nombre'],
+            'evaluacion'=>$dataTipoEvaluacion['evaluacion'],
+            'estado'=>$dataTipoEvaluacion['estado']
+        ]);
+        return response()->json(['tipo_evaluacion' => $evaluacion], 200);
+
     }
 
 }
