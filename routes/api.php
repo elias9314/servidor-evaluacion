@@ -155,6 +155,7 @@ Route::get('/generar_clave','PruebasController@generarClave');
 
 Route:: get('/docentes','DocentesController@getDocente');
 Route::get('/docentes/{id}','DocentesController@getById');
+Route::get('/docentes/filter','DocentesController@filter');
 Route::post('/docentes','DocentesController@createDocente');
 Route::put('/docentes','DocentesController@updateDocente');
 
