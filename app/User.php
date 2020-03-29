@@ -55,6 +55,10 @@ class User extends Authenticatable //implements Auditable
         return $this->hasOne('App\Estudiante');
     }
 
+    public function docente()
+    {
+        return $this->hasOne('App\Docente');
+    }
     public function sendPasswordResetNotification($token){
         $this->notify(new ResetePasswordNotification($token));
     }

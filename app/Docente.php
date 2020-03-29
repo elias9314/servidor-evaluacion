@@ -9,17 +9,21 @@ class Docente extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
     protected $fillable = [
+        'identificacion',
         'apellido1',
         'apellido2',
-        'correo_institucional',
-        'correo_personal',
-        'estado',
-        'fecha_nacimiento',
-        'sexo',
-        'identificacion',
         'nombre1',
         'nombre2',
+        'correo_institucional',
+        'correo_personal',
+        'fecha_nacimiento',
+        'sexo',
+        'estado',
+        'telefono',
         'tipo_identificacion',
+
+
+        
     ];
 
     public function matriculas()

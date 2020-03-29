@@ -23,6 +23,7 @@ class CreateDocenteAsignaturasTable extends Migration
             $table->foreign('asignatura_id')->references('id')->on('asignaturas');
             $table->string('paralelo');
             $table->string('jornada');
+            $table->boolean('autoevaluacion')->default(false);
             $table->string('estado')->default('ACTIVO');
             $table->timestamps();
         });

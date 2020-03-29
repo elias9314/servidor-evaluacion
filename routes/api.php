@@ -114,6 +114,7 @@ Route::put('/users/reset_password', 'UsersController@resetPassword');
 Route::get('/usuarios', 'UsersController@get');
 Route::get('/usuarios/login', 'UsersController@getLogin');
 Route::get('/usuarios/filter', 'UsersController@filter');
+//Route::get('/usuarios', 'UsersController@getUsuarioDocentes');
 Route::post('/usuarios', 'UsersController@create');
 Route::put('/usuarios', 'UsersController@update');
 
@@ -156,7 +157,7 @@ Route::get('/generar_clave','PruebasController@generarClave');
 Route:: get('/docentes','DocentesController@getDocente');
 Route::get('/docentes/{id}','DocentesController@getById');
 Route::get('/docentes/filter','DocentesController@filter');
-Route::post('/docentes','DocentesController@createDocente');
+Route::post('/docente','DocentesController@createDocente');
 Route::put('/docentes','DocentesController@updateDocente');
 
 
