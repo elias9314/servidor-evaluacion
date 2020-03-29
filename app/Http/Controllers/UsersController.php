@@ -50,7 +50,7 @@ class UsersController extends Controller
 
     public function filter(Request $request)
     {
-        $usuarios = Docente::orWhere('identificacion', 'like', '%' . $request->buscador . '%')
+        $usuarios = Docente::orWhere('identificacion', 'like', '%' .$request->buscador . '%')
                     ->orWhere('correo_institucional', 'like', '%' .  strtolower(trim($request->buscador)) . '%')
                     ->orWhere('nombre1', 'like', '%' . strtoupper(trim($request->buscador)) . '%')
                     ->orWhere('apellido1', 'like', '%' . strtoupper(trim($request->buscador)). '%')
@@ -121,7 +121,7 @@ class UsersController extends Controller
             //     $usuario->carreras()->attach($dataCarreras[$i]['id']);
             //}
             $usuario->update([
-                'name' => $dataUsuario['name'],
+                'name' =>  strtoupper(trim($dataUsuario['name'])),
                 'user_name' => $dataUsuario['user_name'],
                 'email' => $dataUsuario['email'],
                 'estado' => $dataUsuario['estado'],
