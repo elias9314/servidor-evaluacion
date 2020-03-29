@@ -15,8 +15,8 @@ class CreateTipoEvaluacionesTable extends Migration
     {
         Schema::create('tipo_evaluaciones', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nombre',200);
-            $table->string('evaluacion',200);
+            $table->string('nombre',200)->unique();;
+            $table->string('evaluacion',200)->unique();;
             $table->string('estado', 20)->default('ACTIVO');
             $table->timestamps();
         });
