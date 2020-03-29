@@ -494,4 +494,12 @@ from
             'eva_preguntas' => $evaPreguntas,
         ], 200);
     }
+    public function adminGet(){
+        $sql = 'SELECT estudiantes.id,estudiantes.identificacion,estudiantes.nombre1,estudiantes.apellido1, estudiantes.correo_institucional,
+        carreras.nombre,estudiantes.estado,roles.descripcion FROM carrera_user
+        INNER JOIN carreras ON carreras.id= carrera_user.carrera_id INNER JOIN users ON users.id=carrera_user.user_id
+        INNER JOIN estudiantes ON users.id=estudiantes.user_id INNER JOIN roles ON users.role_id=roles.id ';
+        $respuesta = DB::select($sql);
+        return response()->json(['admin-estudiante' => $respuesta], 200);
+    }
 }
