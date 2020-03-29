@@ -46,7 +46,7 @@ class CreateInformacionEstudiantesTable extends Migration
             $table->string('ha_realizado_vinculacion', 10)->default('0');
             $table->string('ha_repetido_asignatura', 10)->default('0');
             $table->string('habla_idioma_ancestral')->default('0');
-            $table->string('idioma_ancestral')->default('');
+            $table->string('idioma_ancestral')->default('')->nullable();
             $table->string('nivel_formacion_madre', 100)->nullable();
             $table->string('nivel_formacion_padre', 100)->nullable();
             $table->string('nombre_empresa_labora', 100)->nullable();
@@ -66,10 +66,10 @@ class CreateInformacionEstudiantesTable extends Migration
             $table->string('telefono_fijo', 20)->nullable();
             $table->string('tiene_discapacidad', 10)->default('0');
             $table->string('tipo_beca', 50)->nullable();
-            $table->string('tipo_discapacidad', 100)->default('7');
-            $table->string('tipo_financiamiento_beca', 50)->default('4');
+            $table->string('tipo_discapacidad', 100)->default('7')->nullable();
+            $table->string('tipo_financiamiento_beca', 50)->default('4')->nullable();
             $table->string('tipo_institucion_practicas', 100)->nullable();
-            $table->string('titulo_superior_obtenido')->default('');
+            $table->string('titulo_superior_obtenido')->default('')->nullable();
         });
     }
 
