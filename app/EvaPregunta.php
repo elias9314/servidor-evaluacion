@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class EvaPregunta extends Model
 {
     protected $fillable = [
-        'codigo', 'orden', 'nombre', 'tipo','cantidad','estado','tipo_evaluacion_id'
+        'codigo', 'orden', 'nombre', 'tipo','cantidad','estado'
     ];
 
     public function tipo_evaluacion()
