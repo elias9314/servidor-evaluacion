@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\EvaRespuesta;
+use Illuminate\Support\Facades\DB;
+
 class EvaRespuestasController extends Controller
 {
     public function getEvaRespuesta(){
@@ -25,5 +27,9 @@ class EvaRespuestasController extends Controller
         $respuesta->update($data);
         return response()->json([$respuesta],200);
     }
-    
+    public function get (){
+        $sql= 'SELECT id,codigo,orden,nombre,valor FROM eva_respuestas';
+        $respuesta = DB::select($sql);
+        return response()->json(['admin-respuestas' => $respuesta], 200);
+    }
 }
