@@ -17,16 +17,16 @@ use Illuminate\Support\Facades\DB;
 
 class DocentesController extends Controller
 {
-   
+
     public function getDocente(){
-        $docente= Docente::all();
+        $docente= Docente::with('user')->orderBy('id')->get();
         return response()->json(['profesor'=>$docente],200);
     }
     public function getById(Request $request){
         $docente = Docente::where('user_id',$request->id)->get();
         return response()->json(['docente'=>$docente],200);
     }
-    
+
     public function createDocente(Request $request){
         $data = $request->json()->all();
         $dataDocente=$data['docente'];
@@ -63,7 +63,7 @@ class DocentesController extends Controller
             'estado' => strtoupper(trim($dataDocente['estado'])),
             'tipo_identificacion' => $dataDocente['tipo_identificacion'],
         ]);
-        
+
         return response()->json(['docente' => $docente],200);
     }
 

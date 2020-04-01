@@ -51,10 +51,17 @@ class UsersController extends Controller
     public function filter(Request $request)
     {
         $usuarios = Docente::orWhere('identificacion', 'like', '%' .$request->buscador . '%')
+
+            ->orWhere('correo_institucional', 'like', '%' .  strtolower(trim($request->buscador)) . '%')
+            ->orWhere('nombre1', 'like', '%' . strtoupper(trim($request->buscador)) . '%')
+            ->orWhere('apellido1', 'like', '%' . strtoupper(trim($request->buscador)). '%')
+            ->with('user')
+
                     ->orWhere('correo_institucional', 'like', '%' .  strtolower(trim($request->buscador)) . '%')
                     ->orWhere('nombre1', 'like', '%' . strtoupper(trim($request->buscador)) . '%')
                     ->orWhere('apellido1', 'like', '%' . strtoupper(trim($request->buscador)). '%')
                     ->with('user')
+
             ->orderBy('apellido1')
             ->get();
         return response()->json(['usuarios' => $usuarios], 200);
@@ -109,10 +116,17 @@ class UsersController extends Controller
         $data = $request->json()->all();
         $dataUsuario = $data['usuario'];
         $dataDocente= $data['docente'];
+
+        //        $dataCarreras = $data['usuario']['carreras'];
+        //      $dataRol = $data['usuario']['role'];
+        $usuario = User::findOrFail($dataUsuario['id']);
+        // $rol = Role::findOrFail($dataRol['id']);
+
   //        $dataCarreras = $data['usuario']['carreras'];
   //      $dataRol = $data['usuario']['role'];
         $usuario = User::findOrFail($dataUsuario['id']);
        // $rol = Role::findOrFail($dataRol['id']);
+
 
         if ($usuario) {
             DB::beginTransaction();
