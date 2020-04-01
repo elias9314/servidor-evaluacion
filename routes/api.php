@@ -108,6 +108,7 @@ Route::put('/cupos/estudiantes', 'EstudiantesController@updateInformacionEstudia
 Route::get('/estudiantes/formulario/{id}', 'EstudiantesController@getFormulario');
 Route::put('/estudiantes/update_perfil', 'EstudiantesController@updatePerfil');
 Route::get('/estudiantes/solicitud_matricula', 'EstudiantesController@getSolicitudMatricula');
+Route::get('/estudiantes/eva_preguntas_eva_respuestas','EstudiantesController@getPreguntas');
 
 
 Route::put('/users/reset_password', 'UsersController@resetPassword');

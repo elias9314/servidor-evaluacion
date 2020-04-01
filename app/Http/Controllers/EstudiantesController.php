@@ -502,4 +502,47 @@ from
         $respuesta = DB::select($sql);
         return response()->json(['admin-estudiante' => $respuesta], 200);
     }
+
+
+    public function getPreguntas(Request $request){
+        try {
+            $estudiante = Estudiante::where('user_id', $request->user_id)->first();
+            $evaPreguntas = DB::select( 'select r.eva_pregunta_eva_respuesta_id,
+            r.docente_asignatura_id,
+            r.estudiante_id,
+            e.nombre1,
+            pr.eva_pregunta_id,
+            ep.nombre,
+            da.docente_id,
+            d.nombre1,
+            d.apellido1,
+            da.asignatura_id,
+            asi.nombre
+            from eva_resultados r 
+            inner join eva_pregunta_eva_respuesta pr on r.eva_pregunta_eva_respuesta_id= pr.id
+            inner join docente_asignaturas da on r.docente_asignatura_id= da.id
+            inner join eva_preguntas ep on pr.eva_pregunta_id= ep.id
+            inner join docentes d on da.docente_id= d.id
+            inner join asignaturas asi on da.asignatura_id=asi.id WHERE docente_asignatura_id='
+            . $request->docente_asignatura_id
+            . " and estudiante_id= " . $estudiante->id. " and eva_pregunta_eva_respuesta.estado = 'ACTIVO'
+            order by eva_preguntas.orden");
+            
+                // 'select eva_preguntas.nombre as pregunta,
+                //                     eva_preguntas.cantidad_respuestas as cantidad_respuestas ,
+                //                     eva_preguntas.orden as orden ,
+                //                     eva_respuestas.* from eva_respuestas
+                //                     inner join eva_preguntas on eva_respuestas.eva_pregunta_id = eva_preguntas.id where
+                //                    docente_asignatura_id=' . $request->docente_asignatura_id
+                // . " and estudiante_id= " . $estudiante->id. " and eva_respuestas.estado = 'ACTIVO'
+                // order by eva_preguntas.orden");
+
+
+        } catch (\ErrorException $e) {
+            return response()->json(['errorInfo' => ['001']], 404);
+        }
+        return response()->json([
+            'eva_pregunta_eva_respuesta' => $evaPreguntas,
+        ], 200);
+    }
 }
