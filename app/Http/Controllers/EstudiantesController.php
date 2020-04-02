@@ -10,6 +10,7 @@ use App\Matricula;
 use App\PeriodoLectivo;
 use App\Ubicacion;
 use App\User;
+use App\DocenteAsignatura;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -477,6 +478,14 @@ from
     {
         try {
             $estudiante = Estudiante::where('user_id', $request->user_id)->first();
+            // $docenteAsignatura = DocenteAsignatura::
+            // where('paralelo',$request->paralelo)->where('jornada',$request->jornada)
+            // ->where('periodo_lectivo_id',$request->periodo_lectivo_id)
+            // ->where('asignatura_id',$request->asignatura_id)
+            // ->with('docente')->first();
+            // return response()->json([
+            //     'docente_asginatura' => $docenteAsignatura,
+            // ], 200);
             $evaPreguntas = DB::select('select eva_preguntas.nombre as pregunta,
                                     eva_preguntas.cantidad_respuestas as cantidad_respuestas ,
                                     eva_preguntas.orden as orden ,
@@ -488,12 +497,14 @@ from
 
 
         } catch (\ErrorException $e) {
-            return response()->json(['errorInfo' => ['001']], 404);
+            return response()->json(['errorInfo' => $e.message], 404);
         }
         return response()->json([
             'eva_preguntas' => $evaPreguntas,
+            //'docente_asginatura' => $docenteAsignatura,
         ], 200);
     }
+
     public function adminGet(){
         $sql = 'SELECT estudiantes.id,estudiantes.identificacion,estudiantes.nombre1,estudiantes.apellido1, estudiantes.correo_institucional,
         carreras.nombre,estudiantes.estado,roles.descripcion FROM carrera_user
@@ -502,31 +513,21 @@ from
         $respuesta = DB::select($sql);
         return response()->json(['admin-estudiante' => $respuesta], 200);
     }
-
-
-    public function getPreguntas(Request $request){
+    
+    public function getPreguntasRespuestas(Request $request){
         try {
-            $estudiante = Estudiante::where('user_id', $request->user_id)->first();
-            $evaPreguntas = DB::select( 'select r.eva_pregunta_eva_respuesta_id,
-            r.docente_asignatura_id,
-            r.estudiante_id,
-            e.nombre1,
-            pr.eva_pregunta_id,
+            
+            $evaPreguntas = DB::select( "select 
+            distinct pr.eva_pregunta_id,
             ep.nombre,
-            da.docente_id,
-            d.nombre1,
-            d.apellido1,
-            da.asignatura_id,
-            asi.nombre
-            from eva_resultados r 
-            inner join eva_pregunta_eva_respuesta pr on r.eva_pregunta_eva_respuesta_id= pr.id
-            inner join docente_asignaturas da on r.docente_asignatura_id= da.id
-            inner join eva_preguntas ep on pr.eva_pregunta_id= ep.id
-            inner join docentes d on da.docente_id= d.id
-            inner join asignaturas asi on da.asignatura_id=asi.id WHERE docente_asignatura_id='
-            . $request->docente_asignatura_id
-            . " and estudiante_id= " . $estudiante->id. " and eva_pregunta_eva_respuesta.estado = 'ACTIVO'
-            order by eva_preguntas.orden");
+            ep.orden,
+            er.nombre as eva_respuesta,
+            er.valor                   
+            from eva_pregunta_eva_respuesta pr 
+            inner join eva_preguntas ep on pr.eva_pregunta_id= ep.id 
+            inner join eva_respuestas er on pr.eva_respuesta_id= er.id
+            inner join tipo_evaluaciones t on ep.tipo_evaluacion_id = t.id 
+            WHERE t.evaluacion='".$request->tipo_evaluacion."' and ep.estado='ACTIVO' and er.estado='ACTIVO' order by ep.orden");
             
                 // 'select eva_preguntas.nombre as pregunta,
                 //                     eva_preguntas.cantidad_respuestas as cantidad_respuestas ,

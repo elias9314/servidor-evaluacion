@@ -97,6 +97,7 @@ Route::post('/emails/detalle_cupos', 'EmailsController@sendDetalleCupos');
 
 Route::get('/paralelos', 'ExcelController@changeParalelo');
 
+Route::get('/eva_preguntas_eva_respuestas','EstudiantesController@getPreguntasRespuestas');
 Route::get('/estudiantes/docente_asignatura', 'EstudiantesController@getDocenteAsignatura');
 Route::get('/estudiantes/asignaturas_actual', 'EstudiantesController@getAsignaturasActual');
 Route::get('/estudiantes/eva_preguntas', 'EstudiantesController@getEvaPreguntas');
@@ -108,7 +109,7 @@ Route::put('/cupos/estudiantes', 'EstudiantesController@updateInformacionEstudia
 Route::get('/estudiantes/formulario/{id}', 'EstudiantesController@getFormulario');
 Route::put('/estudiantes/update_perfil', 'EstudiantesController@updatePerfil');
 Route::get('/estudiantes/solicitud_matricula', 'EstudiantesController@getSolicitudMatricula');
-Route::get('/estudiantes/eva_preguntas_eva_respuestas','EstudiantesController@getPreguntas');
+
 
 
 Route::put('/users/reset_password', 'UsersController@resetPassword');
