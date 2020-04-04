@@ -478,14 +478,14 @@ from
     {
         try {
             $estudiante = Estudiante::where('user_id', $request->user_id)->first();
-            // $docenteAsignatura = DocenteAsignatura::
-            // where('paralelo',$request->paralelo)->where('jornada',$request->jornada)
-            // ->where('periodo_lectivo_id',$request->periodo_lectivo_id)
-            // ->where('asignatura_id',$request->asignatura_id)
-            // ->with('docente')->first();
-            // return response()->json([
-            //     'docente_asginatura' => $docenteAsignatura,
-            // ], 200);
+             $docenteAsignatura = DocenteAsignatura::
+             where('paralelo',$request->paralelo)->where('jornada',$request->jornada)
+             ->where('periodo_lectivo_id',$request->periodo_lectivo_id)
+             ->where('asignatura_id',$request->asignatura_id)
+             ->with('docente')->first();
+             return response()->json([
+                 'docente_asginatura' => $docenteAsignatura,
+             ], 200);
             $evaPreguntas = DB::select('select eva_preguntas.nombre as pregunta,
                                     eva_preguntas.cantidad_respuestas as cantidad_respuestas ,
                                     eva_preguntas.orden as orden ,
@@ -513,35 +513,18 @@ from
         $respuesta = DB::select($sql);
         return response()->json(['admin-estudiante' => $respuesta], 200);
     }
-    
+
     public function getPreguntasRespuestas(Request $request){
-        try {
-            
-            $evaPreguntas = DB::select( "select 
-            distinct pr.eva_pregunta_id,
-            ep.nombre,
-            ep.orden,
-            er.nombre as eva_respuesta,
-            er.valor                   
-            from eva_pregunta_eva_respuesta pr 
-            inner join eva_preguntas ep on pr.eva_pregunta_id= ep.id 
-            inner join eva_respuestas er on pr.eva_respuesta_id= er.id
-            inner join tipo_evaluaciones t on ep.tipo_evaluacion_id = t.id 
-            WHERE t.evaluacion='".$request->tipo_evaluacion."' and ep.estado='ACTIVO' and er.estado='ACTIVO' order by ep.orden");
-            
-                // 'select eva_preguntas.nombre as pregunta,
-                //                     eva_preguntas.cantidad_respuestas as cantidad_respuestas ,
-                //                     eva_preguntas.orden as orden ,
-                //                     eva_respuestas.* from eva_respuestas
-                //                     inner join eva_preguntas on eva_respuestas.eva_pregunta_id = eva_preguntas.id where
-                //                    docente_asignatura_id=' . $request->docente_asignatura_id
-                // . " and estudiante_id= " . $estudiante->id. " and eva_respuestas.estado = 'ACTIVO'
-                // order by eva_preguntas.orden");
 
+            $evaPreguntas = DB::select( "select distinct
+                eva_pregunta_eva_respuesta.id,eva_preguntas.orden as orden,eva_preguntas.nombre as pregunta,
+                eva_respuestas.nombre,tipo_evaluaciones.nombre as tipo, eva_respuestas.* from eva_preguntas
+                inner join tipo_evaluaciones on tipo_evaluaciones.id = eva_preguntas.tipo_evaluacion_id
+                inner join eva_pregunta_eva_respuesta on eva_preguntas.id = eva_pregunta_eva_respuesta.eva_pregunta_id
+                inner join eva_respuestas on eva_respuestas.id = eva_pregunta_eva_respuesta.eva_respuesta_id
+                WHERE tipo_evaluaciones.evaluacion='".$request->tipo_evaluacion."' and eva_preguntas.estado='ACTIVO'
+                and eva_respuestas.estado='ACTIVO' order by eva_preguntas.orden");
 
-        } catch (\ErrorException $e) {
-            return response()->json(['errorInfo' => ['001']], 404);
-        }
         return response()->json([
             'eva_pregunta_eva_respuesta' => $evaPreguntas,
         ], 200);
