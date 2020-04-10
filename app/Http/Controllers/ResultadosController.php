@@ -33,13 +33,6 @@ class ResultadosController extends Controller
         $resultados->docente_asignatura()->associate($docenteasignatura);
         $resultados->save();
         return response()->json(['resultados' => $resultados], 201);
-
-       // $dataEstudiante =$data['resultados']['estudiante'];
-      //  $dataDocenteAsignatura = $data['resultados']['docente_asignatura'];
-       // $dataRespuesta = $data['resultados']['respuesta'];
-      //  $estudiante = Estudiante::find($dataEstudiante['id']);
-       // $docenteasignatura = DocenteAsignatura::find($dataDocenteAsignatura['id']);
-       // $respuesta = EvaRespuesta::find(['id']);
-
+        
     }
 }
