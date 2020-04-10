@@ -516,9 +516,18 @@ from
 
     public function getPreguntasRespuestas(Request $request){
 
+       // $estudiante = Estudiante::where('user_id', $request->user_id)->first();
+        //$docenteAsignatura = DocenteAsignatura::
+        //where('paralelo',$request->paralelo)->where('jornada',$request->jornada)
+          //  ->where('periodo_lectivo_id',$request->periodo_lectivo_id)
+            //->where('asignatura_id',$request->asignatura_id)
+            //->with('docente')->first();
+        //return response()->json([
+          //  'docente_asginatura' => $docenteAsignatura,
+        //], 200);
             $evaPreguntas = DB::select( "select distinct
                 eva_pregunta_eva_respuesta.id,eva_preguntas.orden as orden,eva_preguntas.nombre as pregunta,
-                eva_respuestas.nombre,tipo_evaluaciones.nombre as tipo, eva_respuestas.* from eva_preguntas
+                eva_respuestas.nombre,tipo_evaluaciones.nombre as tipo, eva_respuestas.id from eva_preguntas
                 inner join tipo_evaluaciones on tipo_evaluaciones.id = eva_preguntas.tipo_evaluacion_id
                 inner join eva_pregunta_eva_respuesta on eva_preguntas.id = eva_pregunta_eva_respuesta.eva_pregunta_id
                 inner join eva_respuestas on eva_respuestas.id = eva_pregunta_eva_respuesta.eva_respuesta_id
@@ -527,6 +536,8 @@ from
 
         return response()->json([
             'eva_pregunta_eva_respuesta' => $evaPreguntas,
+            //'docente_asginatura' => $docenteAsignatura
         ], 200);
     }
+
 }

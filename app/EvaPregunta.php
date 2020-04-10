@@ -14,4 +14,8 @@ class EvaPregunta extends Model
     {
         return $this->belongsTo('App\TipoEvaluacion');
     }
+    public function resultado()
+    {
+        return $this->hasMany('App\EvaPreguntaEvaRespuesta');
+    }
 }

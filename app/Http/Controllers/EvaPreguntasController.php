@@ -51,4 +51,5 @@ class EvaPreguntasController extends Controller
             $pregunta->save();
             return response()->json(['eva_pregunta' => $response],200);
         }
+
 }

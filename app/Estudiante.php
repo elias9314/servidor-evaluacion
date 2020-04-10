@@ -45,4 +45,9 @@ class Estudiante extends Model implements Auditable
     {
         return $this->belongsTo('App\User');
     }
+
+    public function resultado()
+    {
+        return $this->hasMany('App\Resultado');
+    }
 }

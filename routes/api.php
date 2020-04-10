@@ -166,4 +166,9 @@ Route::put('/docentes','DocentesController@updateDocente');
 Route::get('/admin-estudiantes','EstudiantesController@adminGet');
 Route::get('/admin-respuestas','EvaRespuestasController@get');
 
+///////////////////////////////////////////////////
+Route::get('/resultados','ResultadosController@getresultados');
+Route::get('/resultados','EvaPreguntaEvaRespuestaController@getPreguntaRespuesta');
+Route::post('/resultado','ResultadosController@createresultado');
+
 

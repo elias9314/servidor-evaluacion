@@ -19,6 +19,7 @@ class CreateEvaPreguntaEvaRespuestaTable extends Migration
             $table->foreign('eva_respuesta_id')->references('id')->on('eva_respuestas');
             $table->integer('eva_pregunta_id')->nullable();
             $table->foreign('eva_pregunta_id')->references('id')->on('eva_preguntas');
+            $table->integer('orden')->unique();
             $table->timestamps();
         });
     }

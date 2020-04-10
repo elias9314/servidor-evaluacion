@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class DocenteAsignatura extends Model implements Auditable
-{ 
+{
     use \OwenIt\Auditing\Auditable;
     protected $fillable = [
         'paralelo',
@@ -16,5 +16,9 @@ class DocenteAsignatura extends Model implements Auditable
     public function docente()
     {
         return $this->belongsTo('App\Docente');
+    }
+    public function resultados()
+    {
+        return $this->hasMany('App\Resultado');
     }
     }
