@@ -439,10 +439,15 @@ from
                 'asignaturas.nombre',
                 'detalle_matriculas.paralelo',
                 'detalle_matriculas.jornada',
-                'detalle_matriculas.estado_evaluacion'
+                'detalle_matriculas.estado_evaluacion',
+                'docente_asignaturas.asignatura_id',
+                'docentes.nombre1',
+                'docentes.apellido1'
             )
                 ->join('detalle_matriculas', 'detalle_matriculas.matricula_id', '=', 'matriculas.id')
                 ->join('asignaturas', 'asignaturas.id', '=', 'detalle_matriculas.asignatura_id')
+                ->join('docente_asignaturas','docente_asignaturas.asignatura_id', '=','detalle_matriculas.asignatura_id')
+                ->join('docentes','docentes.id','=','docente_asignaturas.docente_id')
                 ->where('matriculas.estudiante_id', $estudiante->id)
                 ->where('matriculas.periodo_lectivo_id', $periodoLectivoActual->id)
                 ->get();
