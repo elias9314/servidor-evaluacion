@@ -20,6 +20,7 @@ Route::get('/detalle_matriculas/count', 'DetalleMatriculasController@getCountDet
 
 Route::get('/asignaturas', 'AsignaturasController@get');
 Route::get('/asignaturas/{id}', 'AsignaturasController@getOne');
+Route::get('/asignaturaEstudiante/{id}', 'AsignaturasController@getDatosbyIDAsignatura');
 
 Route::get('/periodo_lectivos', 'PeriodoLectivosController@get');
 Route::delete('/periodo_lectivos', 'PeriodoLectivosController@delete');
@@ -104,11 +105,14 @@ Route::get('/estudiantes/eva_preguntas', 'EstudiantesController@getEvaPreguntas'
 Route::get('/estudiantes/historicos', 'EstudiantesController@getHistoricos');
 Route::get('/estudiantes/en_proceso', 'EstudiantesController@getEnProceso');
 Route::get('/estudiantes/{id}', 'EstudiantesController@getOne');
+Route::get('/docentes/{id}', 'EstudiantesController@getDatosbyID');
+Route::get('/estudianteAsignaturas/{id}', 'EstudiantesController@getDatosbyIDAsignatura');
 Route::get('/cupos/estudiantes', 'EstudiantesController@getInformacionEstudianteCupo');
 Route::put('/cupos/estudiantes', 'EstudiantesController@updateInformacionEstudianteCupo');
 Route::get('/estudiantes/formulario/{id}', 'EstudiantesController@getFormulario');
 Route::put('/estudiantes/update_perfil', 'EstudiantesController@updatePerfil');
 Route::get('/estudiantes/solicitud_matricula', 'EstudiantesController@getSolicitudMatricula');
+// Route::get('/docentesAsignaturas','EstudiantesController@getDocenteAsig');
 
 
 

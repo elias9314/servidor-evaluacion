@@ -426,7 +426,34 @@ from
 
         return response()->json(['solicitud' => $certificadoMatricula], 200);
     }
+    // public function getAsignaturasActual(Request $request)
+    // {
 
+    //     try {
+    //         $estudiante = Estudiante::where('user_id', $request->user_id)->first();
+    //         $periodoLectivoActual = PeriodoLectivo::findOrFail($request->periodo_lectivo_id);
+    //         $asignaturasMatricula = Matricula::select(
+    //             'detalle_matriculas.id',
+    //             'asignaturas.codigo',
+    //             'asignaturas.nombre',
+    //             'detalle_matriculas.paralelo',
+    //             'detalle_matriculas.jornada',
+    //             'detalle_matriculas.estado_evaluacion'
+    //         )
+    //             ->join('detalle_matriculas', 'detalle_matriculas.matricula_id', '=', 'matriculas.id')
+    //             ->join('asignaturas', 'asignaturas.id', '=', 'detalle_matriculas.asignatura_id')
+    //             ->where('matriculas.estudiante_id', $estudiante->id)
+    //             ->where('matriculas.periodo_lectivo_id', $periodoLectivoActual->id)
+    //             ->get();
+
+
+    //     } catch (\ErrorException $e) {
+    //         return response()->json(['errorInfo' => ['001']], 404);
+    //     }
+    //     return response()->json([
+    //         'asignaturas_matricula' => $asignaturasMatricula,
+    //     ], 200);
+    // }
     public function getAsignaturasActual(Request $request)
     {
 
@@ -435,6 +462,10 @@ from
             $periodoLectivoActual = PeriodoLectivo::findOrFail($request->periodo_lectivo_id);
             $asignaturasMatricula = Matricula::select(
                 'detalle_matriculas.id',
+                'asignaturas.id as idAsignatura',
+                'docentes.user_id',
+                'docentes.nombre1',
+                'docentes.apellido1',
                 'asignaturas.codigo',
                 'asignaturas.nombre',
                 'detalle_matriculas.paralelo',
@@ -443,19 +474,54 @@ from
             )
                 ->join('detalle_matriculas', 'detalle_matriculas.matricula_id', '=', 'matriculas.id')
                 ->join('asignaturas', 'asignaturas.id', '=', 'detalle_matriculas.asignatura_id')
+                ->join('docente_asignaturas', 'asignaturas.id', '=', 'docente_asignaturas.asignatura_id')
+                ->join('docentes', 'docentes.id', '=', 'docente_asignaturas.docente_id')
                 ->where('matriculas.estudiante_id', $estudiante->id)
                 ->where('matriculas.periodo_lectivo_id', $periodoLectivoActual->id)
                 ->get();
-
+                // foreach($asignaturasMatricula as $lol){
+                //     $lol.push($lol.'detalle_matriculas.id');
+                //     print ($lol);
+                // }
 
         } catch (\ErrorException $e) {
             return response()->json(['errorInfo' => ['001']], 404);
         }
         return response()->json([
             'asignaturas_matricula' => $asignaturasMatricula,
+            // 'docente'=>$docente
         ], 200);
     }
-
+    public function getDatosbyID(Request $request)
+    {
+        try {
+            $docente = Docente::where('user_id', $request->id)->first();
+            $periodoLectivoActual = PeriodoLectivo::where($request->periodo_lectivo_id)->first();
+            // $matricula = Matricula::select(
+            //     'detalle_matriculas.id',
+            //     'asignaturas.id as idAsignatura',
+            //     'docentes.nombre1',
+            //     'docentes.apellido1',
+            //     'asignaturas.codigo',
+            //     'asignaturas.nombre',
+            //     'detalle_matriculas.paralelo',
+            //     'detalle_matriculas.jornada',
+            //     'detalle_matriculas.estado_evaluacion'
+            // )
+            // ->join('detalle_matriculas', 'detalle_matriculas.matricula_id', '=', 'matriculas.id')
+            // ->join('asignaturas', 'asignaturas.id', '=', 'detalle_matriculas.asignatura_id')
+            // ->join('docente_asignaturas', 'asignaturas.id', '=', 'docente_asignaturas.asignatura_id')
+            // ->join('docentes', 'docentes.id', '=', 'docente_asignaturas.docente_id')
+            // ->where('matriculas.estudiante_id', $estudiante->id)
+            // ->where('matriculas.periodo_lectivo_id', $periodoLectivoActual->id)
+                // ->first();
+        } catch (\ErrorException $e) {
+            return response()->json(['errorInfo' => ['001']], 404);
+        }
+        return response()->json([
+            'docente' => $docente,
+        ], 200);
+    }
     public function getDocenteAsignatura(Request $request)
     {
         try {
@@ -539,5 +605,13 @@ from
             //'docente_asginatura' => $docenteAsignatura
         ], 200);
     }
+    // public function getDocenteAsig(Request $request){
+
+    //     //te mando una nota de voz de lo que tienes que hacer porque tengo que ir ayudar a mi mami esta trbjanado ok
+    //     $docenteAsig=DB::select("select docentes.id,docentes.identificacion,docentes.apellido1,docentes.nombre1 from docentes ");
+    //     // ->where('matriculas.estudiante_id', $estudiante->id)
+    //     // ->where('matriculas.periodo_lectivo_id', $periodoLectivoActual->id);
+    //     return response()->json(['asignaturas'=>$docenteAsig],200);
+    // }
 
 }
