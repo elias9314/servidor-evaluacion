@@ -592,7 +592,7 @@ from
           //  'docente_asginatura' => $docenteAsignatura,
         //], 200);
             $evaPreguntas = DB::select( "select distinct
-                eva_pregunta_eva_respuesta.id,eva_preguntas.orden as orden,eva_preguntas.nombre as pregunta,
+                eva_pregunta_eva_respuesta.id as numero,eva_preguntas.orden as orden,eva_preguntas.nombre as pregunta,
                 eva_respuestas.nombre,tipo_evaluaciones.nombre as tipo, eva_respuestas.id from eva_preguntas
                 inner join tipo_evaluaciones on tipo_evaluaciones.id = eva_preguntas.tipo_evaluacion_id
                 inner join eva_pregunta_eva_respuesta on eva_preguntas.id = eva_pregunta_eva_respuesta.eva_pregunta_id
