@@ -21,9 +21,7 @@ class Docente extends Model implements Auditable
         'estado',
         'telefono',
         'tipo_identificacion',
-
-
-        
+      //  'imagen'
     ];
 
     public function matriculas()

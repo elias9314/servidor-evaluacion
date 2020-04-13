@@ -13,7 +13,8 @@ use App\User;
 
 use Illuminate\Http\Request;
 use App\Docente;
-use Illuminate\Support\Facades\DB;
+
+use Illuminate\Support\Facades\Storage;
 
 class DocentesController extends Controller
 {
@@ -43,7 +44,13 @@ class DocentesController extends Controller
             'estado' => strtoupper(trim($dataDocente['estado'])),
             'telefono'  => $dataDocente['telefono'],
             'tipo_identificacion' => $dataDocente['tipo_identificacion'],
+            'imagen'=>$dataDocente['imagen']
         ]);
+        //if ($request->imagen('imagen')){
+         //   $path = Storage::disk('public')->put('image', $request->imagen('imagen'));
+          //  $docente->fill(['imagen'=> asset($path)])->save();
+       // }
+       // $docente->tags()->sync($request->get('tags'));
         return response()->json(['docente'=> $docente],200);
     }
     public function updateDocente(Request $request){
@@ -62,8 +69,12 @@ class DocentesController extends Controller
             'sexo' => strtoupper(trim($dataDocente['sexo'])),
             'estado' => strtoupper(trim($dataDocente['estado'])),
             'tipo_identificacion' => $dataDocente['tipo_identificacion'],
+            //'imagen'=>$dataDocente['imagen']
         ]);
-
+       // if ($request->imagen('imagen')){
+           // $path = Storage::disk('public')->put('image', $request->imagen('imagen'));
+         //   $docente->fill(['imagen'=> asset($path)])->save();
+      //  }
         return response()->json(['docente' => $docente],200);
     }
 
