@@ -25,7 +25,8 @@ class CreateDocentesTable extends Migration
             $table->string('nombre2', 50)->nullable();
             $table->string('sexo', 50)->default(0);
             $table->string('correo_personal', 100)->nullable();
-            $table->string('correo_institucional', 100)->nullable()->unique();;
+            $table->string('correo_institucional', 100)->nullable()->unique();
+            $table->string('imagen')->nullable();
             $table->date('fecha_nacimiento')->nullable();
             $table->string('estado', 20)->default('ACTIVO');
             $table->timestamps();
