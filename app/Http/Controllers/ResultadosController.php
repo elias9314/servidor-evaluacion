@@ -33,9 +33,11 @@ class ResultadosController extends Controller
                 'tipo' => $resultado['tipo']
             ]);
             $respuesta = EvaPreguntaEvaRespuesta::findOrFail($resultado['eva_pregunta_eva_respuesta_id']);
+            $respuesta1 = Estudiante::findOrFail($resultado['estudiante_id']);
             $docenteasignatura = DocenteAsignatura::findOrFail($request['idDocenteAsignatura']);
 
             $nuevoResultado->eva_pregunta_eva_respuesta()->associate($respuesta);
+            $nuevoResultado->estudiante()->associate($respuesta1);
             $nuevoResultado->docente_asignatura()->associate($docenteasignatura);
             $nuevoResultado->save();
         };
