@@ -174,7 +174,5 @@ Route::get('/admin-respuestas','EvaRespuestasController@get');
 Route::get('/resultados','ResultadosController@getresultados');
 Route::get('/resultados','EvaPreguntaEvaRespuestaController@getPreguntaRespuesta');
 Route::post('/resultado','ResultadosController@createresultado');
-Route::get('/docente_estudiante','ResultadosController@getDocenteEstudiante');
 Route::get('/asignatura_docente','ResultadosController@getIdDocenteAsignatura');
-
-
+Route::get('/preguntasrespuestas','EvaPreguntaEvaRespuestaController@getEvaPreguntasEvaRespuestas');

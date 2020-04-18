@@ -461,6 +461,7 @@ from
             $estudiante = Estudiante::where('user_id', $request->user_id)->first();
             $periodoLectivoActual = PeriodoLectivo::findOrFail($request->periodo_lectivo_id);
             $asignaturasMatricula = Matricula::select(
+                'matriculas.estudiante_id as estudiante_id',
                 'detalle_matriculas.id',
                 'asignaturas.id as idAsignatura',
                 'docentes.user_id',
@@ -593,7 +594,9 @@ from
           //  'docente_asginatura' => $docenteAsignatura,
         //], 200);
             $evaPreguntas = DB::select( "select distinct
-                eva_pregunta_eva_respuesta.id as numero,eva_preguntas.orden as orden,eva_preguntas.nombre as pregunta,
+                eva_pregunta_eva_respuesta.id as eva_pregunta_eva_respuesta_id,eva_preguntas.orden as orden,eva_preguntas.nombre as pregunta,
+                eva_preguntas.id as idPregunta,
+                eva_respuestas.valor as valor,
                 eva_respuestas.nombre,tipo_evaluaciones.nombre as tipo, eva_respuestas.id from eva_preguntas
                 inner join tipo_evaluaciones on tipo_evaluaciones.id = eva_preguntas.tipo_evaluacion_id
                 inner join eva_pregunta_eva_respuesta on eva_preguntas.id = eva_pregunta_eva_respuesta.eva_pregunta_id
@@ -606,13 +609,5 @@ from
             //'docente_asginatura' => $docenteAsignatura
         ], 200);
     }
-    // public function getDocenteAsig(Request $request){
-
-    //     //te mando una nota de voz de lo que tienes que hacer porque tengo que ir ayudar a mi mami esta trbjanado ok
-    //     $docenteAsig=DB::select("select docentes.id,docentes.identificacion,docentes.apellido1,docentes.nombre1 from docentes ");
-    //     // ->where('matriculas.estudiante_id', $estudiante->id)
-    //     // ->where('matriculas.periodo_lectivo_id', $periodoLectivoActual->id);
-    //     return response()->json(['asignaturas'=>$docenteAsig],200);
-    // }
 
 }

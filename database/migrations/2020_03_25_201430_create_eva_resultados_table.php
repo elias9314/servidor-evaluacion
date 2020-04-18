@@ -16,7 +16,7 @@ class CreateEvaResultadosTable extends Migration
         Schema::create('eva_resultados', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('eva_pregunta_eva_respuesta_id')->nullable();
-            $table->foreign('eva_pregunta_eva_respuesta_id')->references('id')->on('eva_respuestas');
+            $table->foreign('eva_pregunta_eva_respuesta_id')->references('id')->on('eva_pregunta_eva_respuesta');
             $table->integer('docente_asignatura_id')->nullable();
             $table->foreign('docente_asignatura_id')->references('id')->on('docente_asignaturas');
             $table->integer('estudiante_id')->nullable();
