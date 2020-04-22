@@ -575,9 +575,12 @@ from
 
     public function adminGet(){
         $sql = 'SELECT estudiantes.id,estudiantes.identificacion,estudiantes.nombre1,estudiantes.apellido1, estudiantes.correo_institucional,
-        carreras.nombre,estudiantes.estado,roles.descripcion FROM carrera_user
+        carreras.nombre,asignaturas.nombre as Asignatura ,detalle_matriculas.estado_evaluacion,estudiantes.estado FROM carrera_user
         INNER JOIN carreras ON carreras.id= carrera_user.carrera_id INNER JOIN users ON users.id=carrera_user.user_id
-        INNER JOIN estudiantes ON users.id=estudiantes.user_id INNER JOIN roles ON users.role_id=roles.id ';
+        INNER JOIN estudiantes ON users.id=estudiantes.user_id INNER JOIN roles ON users.role_id=roles.id
+		INNER JOIN matriculas ON matriculas.estudiante_id=estudiantes.id INNER JOIN detalle_matriculas
+		ON detalle_matriculas.matricula_id=matriculas.id INNER JOIN asignaturas
+		ON detalle_matriculas.asignatura_id=asignaturas.id';
         $respuesta = DB::select($sql);
         return response()->json(['admin-estudiante' => $respuesta], 200);
     }

@@ -22,7 +22,7 @@ class ResultadosController extends Controller
         $asignatura = DocenteAsignatura::where('asignatura_id',$request->asignatura_id)->get();
             return response()->json(['docenteAsignatura'=>$asignatura],200);
     }
-    
+
     public function createresultado(Request $request)
     {
         $data = $request->json()->all();
@@ -45,6 +45,6 @@ class ResultadosController extends Controller
         return response()->json(['resultados' => $nuevoResultado], 201);
 
     }
-  
+
 
 }
