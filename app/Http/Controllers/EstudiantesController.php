@@ -597,7 +597,8 @@ from
                 eva_pregunta_eva_respuesta.id as eva_pregunta_eva_respuesta_id,eva_preguntas.orden as orden,eva_preguntas.nombre as pregunta,
                 eva_preguntas.id as idPregunta,
                 eva_respuestas.valor as valor,
-                eva_respuestas.nombre,tipo_evaluaciones.nombre as tipo, eva_respuestas.id from eva_preguntas
+                eva_respuestas.nombre,tipo_evaluaciones.nombre as tipo, eva_respuestas.id 
+                from eva_preguntas
                 inner join tipo_evaluaciones on tipo_evaluaciones.id = eva_preguntas.tipo_evaluacion_id
                 inner join eva_pregunta_eva_respuesta on eva_preguntas.id = eva_pregunta_eva_respuesta.eva_pregunta_id
                 inner join eva_respuestas on eva_respuestas.id = eva_pregunta_eva_respuesta.eva_respuesta_id
@@ -609,5 +610,55 @@ from
             //'docente_asginatura' => $docenteAsignatura
         ], 200);
     }
+
+      public function getDetalleM(Request $request)
+    {
+        try {
+            $estudiante = Estudiante::where('user_id', $request->user_id)->first();
+            $periodoLectivoActual = PeriodoLectivo::findOrFail($request->periodo_lectivo_id);
+            $docenteAsignatura = DocenteAsignatura::findOrFail('docente_asignatura_id'->$request->id);
+            $asignaturasMatricula = Matricula::select(
+                'asignaturas.nombre',
+                //'detalle_matriculas.matricula_id',
+                'detalle_matriculas.estado_evaluacion',
+                'docente_asignaturas.id'
+                //'asignaturas.id'
+            )
+                ->join('detalle_matriculas', 'detalle_matriculas.matricula_id', '=', 'matriculas.id')
+                ->join('asignaturas', 'asignaturas.id', '=', 'detalle_matriculas.asignatura_id')
+                ->join('docente_asignaturas', 'docente_asignaturas.asignatura_id', '=', 'detalle_matriculas.asignatura_id')
+                ->where('matriculas.estudiante_id', $estudiante->id)
+                ->where('matriculas.periodo_lectivo_id', $periodoLectivoActual->id)
+                //->where('detalle_matriculas.asignatura_id', $docenteAsignatura->id)
+                ->get();
+
+
+        } catch (\ErrorException $e) {
+            return response()->json(['errorInfo' => ['001']], 404);
+        }
+        return response()->json([
+            'detalle_matricula' => $asignaturasMatricula,
+        ], 200);
+    }
+    public function updateEstadoEvaluacion(Request $request)
+    {
+        try {
+            $data = $request->json()->all();
+            $estudiante = Estudiante::where('user_id', $request->user_id)->first();
+            $periodoLectivoActual = PeriodoLectivo::findOrFail($request->periodo_lectivo_id);
+            $dataMatricula = $data['matricula'];
+            $matricula = Matricula::findOrFail( $dataMatricula['id']);
+            $matricula->update([
+                'estado_evaluacion' => $dataEstudiante['estado_evaluacion'],
+            ]);
+
+        } catch (\ErrorException $e) {
+            return response()->json(['errorInfo' => ['001']], 404);
+        }
+        return response()->json([
+            'estado_evaluacion' => $matricula
+        ], 200);
+    }
+
 
 }

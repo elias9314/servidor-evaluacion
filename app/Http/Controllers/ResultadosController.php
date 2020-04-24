@@ -18,7 +18,7 @@ class ResultadosController extends Controller
 
     public function getIdDocenteAsignatura(Request $request)
     {
-        $asignaturaDocente = DocenteAsignatura::where('docente_id',$request->id)->first();
+ //       $asignaturaDocente = DocenteAsignatura::where('docente_id',$request->id)->first();
         $asignatura = DocenteAsignatura::where('asignatura_id',$request->asignatura_id)->get();
             return response()->json(['docenteAsignatura'=>$asignatura],200);
     }
@@ -45,6 +45,7 @@ class ResultadosController extends Controller
         return response()->json(['resultados' => $nuevoResultado], 201);
 
     }
+
   
 
 }
