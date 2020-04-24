@@ -28,9 +28,16 @@ class DocentesController extends Controller
         return response()->json(['docente'=>$docente],200);
     }
 
-    public function createDocente(Request $request){
-        $data = $request->json()->all();
-        $dataDocente=$data['docente'];
+    public function createDocente(Request $request)
+    {
+        $ruta='';
+        if ($request->hasFile('imagen')){
+        $file = $request->file('imagen');
+        $name = time().$file->getClientOriginalName();
+         $ruta = $file->move(public_path().'/fotos/', $name);
+
+    }
+        $dataDocente=$request;
         $docente=Docente::create([
             'identificacion'=> $dataDocente['identificacion'],
             'apellido1'=>strtoupper(trim($dataDocente['apellido1'])),
@@ -44,13 +51,8 @@ class DocentesController extends Controller
             'estado' => strtoupper(trim($dataDocente['estado'])),
             'telefono'  => $dataDocente['telefono'],
             'tipo_identificacion' => $dataDocente['tipo_identificacion'],
-            'imagen'=>$dataDocente['imagen']
+            'imagen'=>$ruta
         ]);
-        //if ($request->imagen('imagen')){
-         //   $path = Storage::disk('public')->put('image', $request->imagen('imagen'));
-          //  $docente->fill(['imagen'=> asset($path)])->save();
-       // }
-       // $docente->tags()->sync($request->get('tags'));
         return response()->json(['docente'=> $docente],200);
     }
     public function updateDocente(Request $request){
@@ -78,5 +80,5 @@ class DocentesController extends Controller
         return response()->json(['docente' => $docente],200);
     }
 
-  
+
 }
