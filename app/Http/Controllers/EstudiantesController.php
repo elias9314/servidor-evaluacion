@@ -575,9 +575,12 @@ from
 
     public function adminGet(){
         $sql = 'SELECT estudiantes.id,estudiantes.identificacion,estudiantes.nombre1,estudiantes.apellido1, estudiantes.correo_institucional,
-        carreras.nombre,estudiantes.estado,roles.descripcion FROM carrera_user
+        carreras.nombre,asignaturas.nombre as Asignatura ,detalle_matriculas.estado_evaluacion,estudiantes.estado FROM carrera_user
         INNER JOIN carreras ON carreras.id= carrera_user.carrera_id INNER JOIN users ON users.id=carrera_user.user_id
-        INNER JOIN estudiantes ON users.id=estudiantes.user_id INNER JOIN roles ON users.role_id=roles.id ';
+        INNER JOIN estudiantes ON users.id=estudiantes.user_id INNER JOIN roles ON users.role_id=roles.id
+		INNER JOIN matriculas ON matriculas.estudiante_id=estudiantes.id INNER JOIN detalle_matriculas
+		ON detalle_matriculas.matricula_id=matriculas.id INNER JOIN asignaturas
+		ON detalle_matriculas.asignatura_id=asignaturas.id';
         $respuesta = DB::select($sql);
         return response()->json(['admin-estudiante' => $respuesta], 200);
     }
@@ -610,55 +613,5 @@ from
             //'docente_asginatura' => $docenteAsignatura
         ], 200);
     }
-
-      public function getDetalleM(Request $request)
-    {
-        try {
-            $estudiante = Estudiante::where('user_id', $request->user_id)->first();
-            $periodoLectivoActual = PeriodoLectivo::findOrFail($request->periodo_lectivo_id);
-            $docenteAsignatura = DocenteAsignatura::findOrFail('docente_asignatura_id'->$request->id);
-            $asignaturasMatricula = Matricula::select(
-                'asignaturas.nombre',
-                //'detalle_matriculas.matricula_id',
-                'detalle_matriculas.estado_evaluacion',
-                'docente_asignaturas.id'
-                //'asignaturas.id'
-            )
-                ->join('detalle_matriculas', 'detalle_matriculas.matricula_id', '=', 'matriculas.id')
-                ->join('asignaturas', 'asignaturas.id', '=', 'detalle_matriculas.asignatura_id')
-                ->join('docente_asignaturas', 'docente_asignaturas.asignatura_id', '=', 'detalle_matriculas.asignatura_id')
-                ->where('matriculas.estudiante_id', $estudiante->id)
-                ->where('matriculas.periodo_lectivo_id', $periodoLectivoActual->id)
-                //->where('detalle_matriculas.asignatura_id', $docenteAsignatura->id)
-                ->get();
-
-
-        } catch (\ErrorException $e) {
-            return response()->json(['errorInfo' => ['001']], 404);
-        }
-        return response()->json([
-            'detalle_matricula' => $asignaturasMatricula,
-        ], 200);
-    }
-    public function updateEstadoEvaluacion(Request $request)
-    {
-        try {
-            $data = $request->json()->all();
-            $estudiante = Estudiante::where('user_id', $request->user_id)->first();
-            $periodoLectivoActual = PeriodoLectivo::findOrFail($request->periodo_lectivo_id);
-            $dataMatricula = $data['matricula'];
-            $matricula = Matricula::findOrFail( $dataMatricula['id']);
-            $matricula->update([
-                'estado_evaluacion' => $dataEstudiante['estado_evaluacion'],
-            ]);
-
-        } catch (\ErrorException $e) {
-            return response()->json(['errorInfo' => ['001']], 404);
-        }
-        return response()->json([
-            'estado_evaluacion' => $matricula
-        ], 200);
-    }
-
 
 }

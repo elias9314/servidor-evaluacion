@@ -18,16 +18,16 @@ class ResultadosController extends Controller
 
     public function getIdDocenteAsignatura(Request $request)
     {
- //       $asignaturaDocente = DocenteAsignatura::where('docente_id',$request->id)->first();
+ //       $asignaturaDocente = DocenteAsignatura::where('docente_id',$requphp artisan serveest->id)->first();
         $asignatura = DocenteAsignatura::where('asignatura_id',$request->asignatura_id)->get();
             return response()->json(['docenteAsignatura'=>$asignatura],200);
     }
-    
+
     public function createresultado(Request $request)
     {
         $data = $request->json()->all();
         $dataResultado = $data['eva_resultados'];
-        foreach ($dataResultado as &$resultado) {
+        foreach ($dataResultado as $resultado) {
             $nuevoResultado = new Resultado([
                 'valor' => $resultado['valor'],
                 'tipo' => $resultado['tipo']
@@ -45,7 +45,36 @@ class ResultadosController extends Controller
         return response()->json(['resultados' => $nuevoResultado], 201);
 
     }
-
-  
+    public function getResultadosAsignaturas(Request $request)
+    {
+        //$asignatura = DocenteAsignatura::where('id',$request->id)->get();    
+        $resultados= Resultado::select(
+            'eva_resultados.*'
+            )
+        ->join('docente_asignaturas','docente_asignaturas.id','eva_resultados.docente_asignatura_id')
+        ->where('docente_asignaturas.periodo_lectivo_id',4)->orderBy('docente_asignatura_id')->get();
+        $docenteAsignaturaId=$resultados[0]['docente_asignatura_id'];
+        $docenteAsignaturaIdTemporal=0;
+        $total=0;
+        
+        foreach($resultados as $resultado){
+            if($resultado['docente_asignatura_id']==$docenteAsignaturaId){
+                $total +=$resultado['valor'];
+                $docenteAsignaturaIdTemporal=$docenteAsignaturaId;
+            }else{
+                DocenteAsignatura::findOrFail($docenteAsignaturaId)->update([
+                    'nota_total'=>$total
+                ]);
+                $docenteAsignaturaId=$resultado['docente_asignatura_id'];
+                $total =$resultado['valor'];
+            }
+        }
+        DocenteAsignatura::findOrFail($docenteAsignaturaId)->update([
+            'nota_total'=>$total
+        ]);
+        
+        return response()->json(DocenteAsignatura::where('nota_total','<>',null)->get(),200);
+        
+    } 
 
 }
