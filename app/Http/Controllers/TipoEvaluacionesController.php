@@ -7,7 +7,7 @@ use App\TipoEvaluacion;
 class TipoEvaluacionesController extends Controller
 {
     public function getTipoEvaluacion(){
-        $evaluacion= TipoEvaluacion::all();
+        $evaluacion= TipoEvaluacion::orderBy('evaluacion')->get();
         return response()->json(['tipo'=>$evaluacion],200);
     }
     public function getById($id){
@@ -15,9 +15,7 @@ class TipoEvaluacionesController extends Controller
         return response()->json(['tipo_evaluacion'=> $evaluacion],200);
     }
     public function createTipoEvaluacion(Request $request){
-      //  $data = $request->json()->all();
-       // TipoEvaluacion::create($data);
-        //return response()->json(['tipo'=>$data],200);
+
         $data = $request->json()->all();
         $dataTipoEvaluacion=$data['tipo_evaluacion'];
         $tipoEvaluacion=TipoEvaluacion::create([
