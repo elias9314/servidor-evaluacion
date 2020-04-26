@@ -27,6 +27,8 @@ class CreateDetalleMatriculasTable extends Migration
             $table->string('numero_matricula', 20)->nullable();
             $table->string('estado', 20)->default('ACTIVO');
             $table->unique(['matricula_id', 'asignatura_id']);
+            $table->boolean('estado_evaluacion')->default(false);
+
         });
     }
 

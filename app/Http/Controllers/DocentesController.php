@@ -80,5 +80,4 @@ class DocentesController extends Controller
         return response()->json(['docente' => $docente],200);
     }
 
-
 }

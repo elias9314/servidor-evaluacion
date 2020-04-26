@@ -176,4 +176,12 @@ Route::get('/resultados','EvaPreguntaEvaRespuestaController@getPreguntaRespuesta
 Route::post('/resultado','ResultadosController@createresultado');
 Route::get('/asignatura_docente','ResultadosController@getIdDocenteAsignatura');
 Route::get('/preguntasrespuestas','EvaPreguntaEvaRespuestaController@getEvaPreguntasEvaRespuestas');
+
+
+Route::get('/detallematricula','EstudiantesController@getDetalleM');
+Route::put('/estado_evaluacion','EstudiantesController@updateEstadoEvaluacion');
+Route::get('/resultados_docente','ResultadosController@getResultadosAsignaturas');
+
+
 // Route::get('/respuestas','ResultadosController@getAllResultados');
+

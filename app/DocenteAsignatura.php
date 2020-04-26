@@ -11,7 +11,8 @@ class DocenteAsignatura extends Model implements Auditable
     protected $fillable = [
         'paralelo',
         'jornada',
-        'estado'
+        'estado',
+        'nota_total'
     ];
     public function docente()
     {

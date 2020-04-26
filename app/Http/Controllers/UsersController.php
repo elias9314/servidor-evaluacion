@@ -73,7 +73,6 @@ class UsersController extends Controller
         $dataUsuario = $data['usuario'];
         $dataDocente = $data['docente'];
         $rol = Role::find(7);
-
         // $dataCarreras = $data['usuario']['carreras'];
         //$dataRol = $data['usuario']['role'];
         $usuario = User::where('email', $dataUsuario['email'])->orWhere('user_name',$dataUsuario['user_name'])->first();
