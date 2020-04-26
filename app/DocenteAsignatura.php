@@ -12,7 +12,8 @@ class DocenteAsignatura extends Model implements Auditable
         'paralelo',
         'jornada',
         'estado',
-        'nota_total'
+        'nota_total',
+        'porcentaje'
     ];
     public function docente()
     {
