@@ -13,7 +13,7 @@ class ResultadosController extends Controller
 {
     public function getresultados(){
         $resultados= Resultado::with('eva_pregunta_eva_respuesta','estudiante','docente_asignatura')->get();
-        return response()->json($resultados,200);
+        return response()->json(['resultados'=>$resultados],200);
     }
 
     public function getIdDocenteAsignatura(Request $request)
@@ -47,7 +47,7 @@ class ResultadosController extends Controller
     }
     public function getResultadosAsignaturas(Request $request)
     {
-        //$asignatura = DocenteAsignatura::where('id',$request->id)->get();    
+        //$asignatura = DocenteAsignatura::where('id',$request->id)->get();
         $resultados= Resultado::select(
             'eva_resultados.*'
             )
@@ -56,7 +56,7 @@ class ResultadosController extends Controller
         $docenteAsignaturaId=$resultados[0]['docente_asignatura_id'];
         $docenteAsignaturaIdTemporal=0;
         $total=0;
-        
+
         foreach($resultados as $resultado){
             if($resultado['docente_asignatura_id']==$docenteAsignaturaId){
                 $total +=$resultado['valor'];
@@ -72,9 +72,9 @@ class ResultadosController extends Controller
         DocenteAsignatura::findOrFail($docenteAsignaturaId)->update([
             'nota_total'=>$total
         ]);
-        
+
         return response()->json(DocenteAsignatura::where('nota_total','<>',null)->get(),200);
-        
-    } 
+
+    }
 
 }
