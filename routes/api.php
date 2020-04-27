@@ -183,5 +183,12 @@ Route::put('/estado_evaluacion','EstudiantesController@updateEstadoEvaluacion');
 Route::get('/resultados_docente','ResultadosController@getResultadosAsignaturas');
 
 
+Route::get('/docente_resultados','ResultadosController@getResultadosAsignaturasId');
+
+
+Route::get('/docente_asignaturas','DocentesController@getDocentesAsignaturas');
+
+
+
 // Route::get('/respuestas','ResultadosController@getAllResultados');
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Carrera;
 use App\Estudiante;
+use App\DocenteAsignatura;
 use App\InformacionEstudiante;
 use App\Instituto;
 use App\Matricula;
@@ -78,6 +79,15 @@ class DocentesController extends Controller
          //   $docente->fill(['imagen'=> asset($path)])->save();
       //  }
         return response()->json(['docente' => $docente],200);
-    }
+ 
+   }
+
+   public function getDocentesAsignaturas(Request $request){
+       $docentesAsignaturas = DocenteAsignatura::where('periodo_lectivo_id',$request->periodo_lectivo_id)
+       ->with('docente')
+       ->with('asignatura')
+       ->get();
+       return response()->json(['docentesAsignaturas' => $docentesAsignaturas],200);
+   }
 
 }

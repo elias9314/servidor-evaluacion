@@ -77,4 +77,57 @@ class ResultadosController extends Controller
 
     }
 
+
+
+    public function getResultadosAsignaturasId(Request $request)
+    {
+
+        $docenteAsignaturas=DocenteAsignatura::where('docente_id',$request->docente_id)
+        ->where('periodo_lectivo_id',$request->periodo_lectivo_id)->get();
+        
+        $total=0;
+        foreach($docenteAsignaturas as $docenteAsignatura){
+            $resultados= Resultado::where('docente_asignatura_id',$docenteAsignatura->id)->get();    
+            
+            foreach($resultados as $resultado){
+                $total +=$resultado['valor'];
+            }
+            
+            $preguntas= Resultado::where('docente_asignatura_id',$docenteAsignatura->id)
+                    ->distinct('eva_pregunta_eva_respuesta_id')
+                    ->get();
+                    
+                    $puntuacionMaxima=sizeof($preguntas)*4;
+                    if($puntuacionMaxima>0){
+                    $porcentaje=round(($total*100)/$puntuacionMaxima);
+                   }else{
+                    $porcentaje=0;
+                   }
+                    
+            DocenteAsignatura::findOrFail($docenteAsignatura->id)->update([
+                'nota_total'=>$total,
+                'porcentaje'=>$porcentaje
+            ]);
+            $total=0;
+        }
+        
+        $da = DocenteAsignatura::where('docente_id',$request->docente_id)
+        ->with('asignatura')->with('docente')->get();
+        
+        $totalAsignaturas=0;
+        foreach($da as $docenteAsignatura){
+            $totalAsignaturas +=$docenteAsignatura['porcentaje'];
+        }
+
+        if(sizeof($da)>0){
+        $promedioAsignaturas= $totalAsignaturas/sizeof($da);
+        }   else{
+            $promedioAsignaturas=0;
+        }
+        return response()->json([
+            'docenteAsignatura'=>$da,
+            'promedio'=>$promedioAsignaturas,
+        ],200);
+        
+    } 
 }
