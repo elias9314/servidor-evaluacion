@@ -187,8 +187,10 @@ Route::get('/docente_resultados','ResultadosController@getResultadosAsignaturasI
 
 
 Route::get('/docente_asignaturas','DocentesController@getDocentesAsignaturas');
-Route::get('/docente_asignatura','DocentesController@getDocenteAsig');
 
+Route::get('/docente_asignatura','DocentesController@getDocenteAsig');
+Route::get('/docenteId','ResultadosController@getResultadosDocenteId');
+Route::get('/promedio','ResultadosController@getResultadosPromedio');
 
 
 // Route::get('/respuestas','ResultadosController@getAllResultados');
