@@ -187,6 +187,8 @@ Route::get('/docente_resultados','ResultadosController@getResultadosAsignaturasI
 
 
 Route::get('/docente_asignaturas','DocentesController@getDocentesAsignaturas');
+Route::get('/docenteId','ResultadosController@getResultadosDocenteId');
+Route::get('/promedio','ResultadosController@getResultadosPromedio');
 
 
 
