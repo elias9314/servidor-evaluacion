@@ -25,6 +25,7 @@ class CreateDocenteAsignaturasTable extends Migration
             $table->string('jornada');
             $table->boolean('autoevaluacion')->default(false);
             $table->doubleval('nota_total');
+            $table->doubleval('porcentaje');
             $table->string('estado')->default('ACTIVO');
             $table->timestamps();
         });

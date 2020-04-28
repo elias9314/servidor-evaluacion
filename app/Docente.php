@@ -38,4 +38,8 @@ class Docente extends Model implements Auditable
     {
         return $this->belongsTo('App\User');
     }
+    public function docenteasignatura()
+    {
+        return $this->hasMany('App\DocenteAsignatura');
+    }
 }

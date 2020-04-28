@@ -21,11 +21,11 @@ class DocentesController extends Controller
 {
 
     public function getDocente(){
-        $docente= Docente::with('user')->orderBy('id')->get();
+        $docente= Docente::with('user','docenteasignatura')->orderBy('id')->get();
         return response()->json(['profesor'=>$docente],200);
     }
     public function getById(Request $request){
-        $docente = Docente::where('user_id',$request->id)->get();
+        $docente = Docente::where('user_id',$request->id)->with('user')->with('docenteasignatura')->get();
         return response()->json(['docente'=>$docente],200);
     }
 
@@ -74,12 +74,9 @@ class DocentesController extends Controller
             'tipo_identificacion' => $dataDocente['tipo_identificacion'],
             //'imagen'=>$dataDocente['imagen']
         ]);
-       // if ($request->imagen('imagen')){
-           // $path = Storage::disk('public')->put('image', $request->imagen('imagen'));
-         //   $docente->fill(['imagen'=> asset($path)])->save();
-      //  }
+
         return response()->json(['docente' => $docente],200);
- 
+
    }
 
    public function getDocentesAsignaturas(Request $request){
@@ -89,5 +86,4 @@ class DocentesController extends Controller
        ->get();
        return response()->json(['docentesAsignaturas' => $docentesAsignaturas],200);
    }
-
 }
