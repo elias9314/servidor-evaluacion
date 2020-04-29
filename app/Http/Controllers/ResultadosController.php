@@ -176,7 +176,7 @@ class ResultadosController extends Controller
         ->where('periodo_lectivo_id',$request->periodo_lectivo_id)
         ->get();
         
-        $total=0;
+        
         
         $da = DocenteAsignatura::where('docente_id',$request->docente_id)
         ->with('asignatura')->with('docente')->with('periodolectivo')->get();
@@ -191,9 +191,17 @@ class ResultadosController extends Controller
         }   else{
             $promedioAsignaturas=0;
         }
+        if(sizeof($da)>0){
+            $total=((($totalAsignaturas/sizeof($da))*30)/100);
+
+        }   else{
+            $total=0;
+        }
         return response()->json([
             'docenteAsignatura'=>$da,
             'promedio'=>$promedioAsignaturas,
+            'total30'=>$total,
+
         ],200);
         
     } 
