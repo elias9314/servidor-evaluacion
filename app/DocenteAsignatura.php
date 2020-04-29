@@ -27,4 +27,8 @@ class DocenteAsignatura extends Model implements Auditable
     {
         return $this->belongsTo('App\Asignatura');
     }
+     public function periodoLectivo()
+    {
+        return $this->belongsTo('App\PeriodoLectivo');
+    }
     }

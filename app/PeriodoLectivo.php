@@ -30,4 +30,8 @@ class PeriodoLectivo extends Model implements Auditable
     {
         return $this->hasMany('App\Matricula');
     }
+    public function periodoLectivo()
+    {
+        return $this->hasMany('App\DocenteAsignatura');
+    }
 }

@@ -179,7 +179,7 @@ class ResultadosController extends Controller
         $total=0;
         
         $da = DocenteAsignatura::where('docente_id',$request->docente_id)
-        ->with('asignatura')->with('docente')->get();
+        ->with('asignatura')->with('docente')->with('periodolectivo')->get();
         
         $totalAsignaturas=0;
         foreach($da as $docenteAsignatura){
@@ -193,7 +193,7 @@ class ResultadosController extends Controller
         }
         return response()->json([
             'docenteAsignatura'=>$da,
-            '%promedio'=>$promedioAsignaturas,
+            'promedio'=>$promedioAsignaturas,
         ],200);
         
     } 
