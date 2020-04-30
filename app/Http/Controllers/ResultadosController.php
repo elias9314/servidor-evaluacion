@@ -192,7 +192,7 @@ class ResultadosController extends Controller
             $promedioAsignaturas=0;
         }
         if(sizeof($da)>0){
-            $total=((($totalAsignaturas/sizeof($da))*30)/100);
+            $total= (($totalAsignaturas/sizeof($da))*30);
 
         }   else{
             $total=0;

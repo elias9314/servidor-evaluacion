@@ -17,6 +17,7 @@ class DetalleMatricula extends Model implements Auditable
         'asistencia1',
         'asistencia2',
         'asistencia_final',
+        'estado_evaluacion'
     ];
 
     public function matricula()
