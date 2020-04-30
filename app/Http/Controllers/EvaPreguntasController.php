@@ -9,7 +9,7 @@ use App\EvaPregunta;
 class EvaPreguntasController extends Controller
 {
     public function getPreguntas(){
-        $preguntas=EvaPregunta::with('tipo_evaluacion')->orderBy('id')->get();
+        $preguntas=EvaPregunta::with('tipo_evaluacion')->orderBy('orden')->get();
         return response()->json(['preguntas'=>$preguntas],200);
     }
 

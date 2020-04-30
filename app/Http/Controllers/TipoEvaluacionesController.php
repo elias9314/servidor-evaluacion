@@ -19,7 +19,7 @@ class TipoEvaluacionesController extends Controller
         $data = $request->json()->all();
         $dataTipoEvaluacion=$data['tipo_evaluacion'];
         $tipoEvaluacion=TipoEvaluacion::create([
-            'nombre' => $dataTipoEvaluacion['nombre'],
+            'nombre' => strtoupper(trim($dataTipoEvaluacion['nombre'])),
             'evaluacion' => $dataTipoEvaluacion['evaluacion'],
             'estado' => $dataTipoEvaluacion['estado'],
         ]);
@@ -29,7 +29,7 @@ class TipoEvaluacionesController extends Controller
         $data=$request->json()->all();
         $dataTipoEvaluacion=$data['tipo_evaluacion'];
         $evaluacion= TipoEvaluacion::findOrFail($dataTipoEvaluacion['id'])->update([
-            'nombre'=>$dataTipoEvaluacion['nombre'],
+            'nombre'=>strtoupper(trim($dataTipoEvaluacion['nombre'])),
             'evaluacion'=>$dataTipoEvaluacion['evaluacion'],
             'estado'=>$dataTipoEvaluacion['estado']
         ]);
