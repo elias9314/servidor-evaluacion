@@ -165,6 +165,8 @@ Route::get('/docentes/{id}','DocentesController@getById');
 Route::get('/docentes/filter','DocentesController@filter');
 Route::post('/docente','DocentesController@createDocente');
 Route::put('/docentes','DocentesController@updateDocente');
+Route::get('/evaluado','DocentesController@putEvaluado');
+
 
 /////////Admin Estudiantes y resultados//////////////
 Route::get('/admin-estudiantes','EstudiantesController@adminGet');

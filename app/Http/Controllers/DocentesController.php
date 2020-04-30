@@ -11,6 +11,10 @@ use App\Matricula;
 use App\PeriodoLectivo;
 use App\Ubicacion;
 use App\User;
+use App\DetalleMatricula;
+use App\Asignatura;
+use App\Resultado;
+
 
 use Illuminate\Http\Request;
 use App\Docente;
@@ -85,5 +89,44 @@ class DocentesController extends Controller
        ->with('asignatura')
        ->get();
        return response()->json(['docentesAsignaturas' => $docentesAsignaturas],200);
+   }
+   public function putEvaluado(Request $request){
+   
+  
+    //return $result[0]['estudiante_id'];
+    //return $result[0]['docente_asignatura_id'];
+
+    $docentesAsignaturas = DocenteAsignatura::where('id', $request->id)
+       ->where('periodo_lectivo_id', $request->periodo_lectivo_id)
+       ->with('asignatura')->get();
+       $estado=true;
+    //return $docentesAsignaturas[0]['asignatura_id'];
+    //return $docentesAsignaturas[0]['id'];
+
+    $result= Resultado::where('docente_asignatura_id',$docentesAsignaturas[0]['id'])
+    ->with('estudiante')->get();
+    //return $result;
+    $matricula= Matricula::where('estudiante_id',$result[0]['estudiante_id'])
+       ->where('periodo_lectivo_id', $docentesAsignaturas[0]['periodo_lectivo_id'])->get();
+      // return $matricula[0]['estudiante_id'];
+
+    // $detalle=DetalleMatricula::where('matricula_id',$matricula[0]['id'])
+    // ->where('asignatura_id',$docentesAsignaturas[0]['asignatura_id'])
+    // ->get();
+    // return $detalle[0]['matricula_id'];
+
+       DetalleMatricula::where('matricula_id',$matricula[0]['id'])
+            ->where('asignatura_id',$docentesAsignaturas[0]['asignatura_id'])->update([
+           'estado_evaluacion'=> $estado
+        ]);
+
+       return response()->json(DetalleMatricula::where('estado_evaluacion','<>',null)
+       ->where('matricula_id',$matricula[0]['id'])
+       ->where('asignatura_id',$docentesAsignaturas[0]['asignatura_id'])
+       ->get(),200);
+    // return response()->json(['docentesAsignaturas' => $docentesAsignaturas, 'detalle'=> $detalle
+    // ],200);
+       
+
    }
 }
