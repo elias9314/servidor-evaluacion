@@ -192,6 +192,6 @@ Route::get('/docente_asignatura','DocentesController@getDocenteAsig');
 Route::get('/docenteId','ResultadosController@getResultadosDocenteId');
 Route::get('/promedio','ResultadosController@getResultadosPromedio');
 
+Route::post('/pregunta_respuesta','EvaPreguntaEvaRespuestaController@createPregunta');
 
-// Route::get('/respuestas','ResultadosController@getAllResultados');
 

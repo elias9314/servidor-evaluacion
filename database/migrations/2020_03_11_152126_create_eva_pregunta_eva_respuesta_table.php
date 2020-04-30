@@ -15,10 +15,10 @@ class CreateEvaPreguntaEvaRespuestaTable extends Migration
     {
         Schema::create('eva_pregunta_eva_respuesta', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('eva_respuesta_id')->nullable();
-            $table->foreign('eva_respuesta_id')->references('id')->on('eva_respuestas');
-            $table->integer('eva_pregunta_id')->nullable();
-            $table->foreign('eva_pregunta_id')->references('id')->on('eva_preguntas');
+            $table->integer('respuestas_id')->nullable();
+            $table->foreign('respuestas_id')->references('id')->on('eva_respuestas');
+            $table->integer('preguntas_id')->nullable();
+            $table->foreign('preguntas_id')->references('id')->on('eva_preguntas');
             $table->integer('orden')->unique();
             $table->timestamps();
         });

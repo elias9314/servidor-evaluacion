@@ -40,7 +40,7 @@ class ResultadosController extends Controller
             $nuevoResultado->estudiante()->associate($respuesta1);
             $nuevoResultado->docente_asignatura()->associate($docenteasignatura);
             $nuevoResultado->save();
-        };
+        }
 
         return response()->json(['resultados' => $nuevoResultado], 201);
 
@@ -85,36 +85,36 @@ class ResultadosController extends Controller
         $docenteAsignaturas=DocenteAsignatura::where('docente_id',$request->docente_id)
         ->where('periodo_lectivo_id',$request->periodo_lectivo_id)
         ->get();
-        
+
         $total=0;
         foreach($docenteAsignaturas as $docenteAsignatura){
-            $resultados= Resultado::where('docente_asignatura_id',$docenteAsignatura->id)->get();    
-            
+            $resultados= Resultado::where('docente_asignatura_id',$docenteAsignatura->id)->get();
+
             foreach($resultados as $resultado){
                 $total +=$resultado['valor'];
             }
-            
+
             $preguntas= Resultado::where('docente_asignatura_id',$docenteAsignatura->id)
                     ->distinct('eva_pregunta_eva_respuesta_id')
                     ->get();
-                    
+
                     $puntuacionMaxima=sizeof($preguntas)*4;
                     if($puntuacionMaxima>0){
                     $porcentaje=round(($total*100)/$puntuacionMaxima);
                    }else{
                     $porcentaje=0;
                    }
-                    
+
             DocenteAsignatura::findOrFail($docenteAsignatura->id)->update([
                 'nota_total'=>$total,
                 'porcentaje'=>$porcentaje
             ]);
             $total=0;
         }
-        
+
         $da = DocenteAsignatura::where('docente_id',$request->docente_id)
         ->with('asignatura')->with('docente')->get();
-        
+
         $totalAsignaturas=0;
         foreach($da as $docenteAsignatura){
             $totalAsignaturas +=$docenteAsignatura['porcentaje'];
@@ -129,8 +129,8 @@ class ResultadosController extends Controller
             'docenteAsignatura'=>$da,
             'promedio'=>$promedioAsignaturas,
         ],200);
-        
-    } 
+
+    }
     public function getResultadosDocenteId(Request $request)
     {
 
@@ -139,7 +139,7 @@ class ResultadosController extends Controller
         //->where('periodo_lectivo_id',$request->periodo_lectivo_id)
         ->get();
         $total=0;
-        
+
         foreach($resultados as $resultado){
             $total +=$resultado['valor'];
         }
@@ -147,27 +147,27 @@ class ResultadosController extends Controller
         $preguntas=Resultado::where('docente_asignatura_id',$resultado->docente_asignatura_id)
                             ->distinct('eva_pregunta_eva_respuesta_id')
                             ->get();
-    
+
         $puntuacionMaxima=sizeof($preguntas)*4;
                 if($puntuacionMaxima>0){
                 $porcentaje=round(($total*100)/$puntuacionMaxima);
                }else{
                 $porcentaje=0;
                }
-                
+
         //return $porcentaje;
         DocenteAsignatura::where('id',$resultado->docente_asignatura_id)->update([
 
              'nota_total'=>$total,
              'porcentaje'=>$porcentaje
          ]);
-        
+
         return response()->json(DocenteAsignatura::where('nota_total','<>',null)
         ->where('id',$resultado->docente_asignatura_id)->get(),200);
         //return response()->json(['resultados' => $resultados], 201);
 
     }
-    
+
 
     public function getResultadosPromedio(Request $request)
     {
@@ -175,12 +175,12 @@ class ResultadosController extends Controller
         $docenteAsignaturas=DocenteAsignatura::where('docente_id',$request->docente_id)
         ->where('periodo_lectivo_id',$request->periodo_lectivo_id)
         ->get();
-        
-        
-        
+
+
+
         $da = DocenteAsignatura::where('docente_id',$request->docente_id)
         ->with('asignatura')->with('docente')->with('periodolectivo')->get();
-        
+
         $totalAsignaturas=0;
         foreach($da as $docenteAsignatura){
             $totalAsignaturas +=$docenteAsignatura['porcentaje'];
@@ -203,6 +203,6 @@ class ResultadosController extends Controller
             'total30'=>$total,
 
         ],200);
-        
-    } 
+
+    }
 }
