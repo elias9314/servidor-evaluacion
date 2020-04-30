@@ -600,11 +600,11 @@ from
                 eva_pregunta_eva_respuesta.id as eva_pregunta_eva_respuesta_id,eva_preguntas.orden as orden,eva_preguntas.nombre as pregunta,
                 eva_preguntas.id as idPregunta,
                 eva_respuestas.valor as valor,
-                eva_respuestas.nombre,tipo_evaluaciones.nombre as tipo, eva_respuestas.id 
+                eva_respuestas.nombre,tipo_evaluaciones.nombre as tipo, eva_respuestas.id
                 from eva_preguntas
                 inner join tipo_evaluaciones on tipo_evaluaciones.id = eva_preguntas.tipo_evaluacion_id
-                inner join eva_pregunta_eva_respuesta on eva_preguntas.id = eva_pregunta_eva_respuesta.eva_pregunta_id
-                inner join eva_respuestas on eva_respuestas.id = eva_pregunta_eva_respuesta.eva_respuesta_id
+                inner join eva_pregunta_eva_respuesta on eva_preguntas.id = eva_pregunta_eva_respuesta.preguntas_id
+                inner join eva_respuestas on eva_respuestas.id = eva_pregunta_eva_respuesta.respuestas_id
                 WHERE tipo_evaluaciones.evaluacion='".$request->tipo_evaluacion."' and eva_preguntas.estado='ACTIVO'
                 and eva_respuestas.estado='ACTIVO' order by eva_preguntas.orden");
 
