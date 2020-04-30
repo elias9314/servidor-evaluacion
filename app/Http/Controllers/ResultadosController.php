@@ -191,11 +191,12 @@ class ResultadosController extends Controller
         }   else{
             $promedioAsignaturas=0;
         }
+        // $total=0.0;
         if(sizeof($da)>0){
-            $total= (($totalAsignaturas/sizeof($da))*30);
+            $total= ((($totalAsignaturas/sizeof($da))*30)/100);
 
         }   else{
-            $total=0;
+            $total=0.;
         }
         return response()->json([
             'docenteAsignatura'=>$da,
