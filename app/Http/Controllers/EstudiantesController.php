@@ -580,7 +580,7 @@ from
         INNER JOIN estudiantes ON users.id=estudiantes.user_id INNER JOIN roles ON users.role_id=roles.id
 		INNER JOIN matriculas ON matriculas.estudiante_id=estudiantes.id INNER JOIN detalle_matriculas
 		ON detalle_matriculas.matricula_id=matriculas.id INNER JOIN asignaturas
-		ON detalle_matriculas.asignatura_id=asignaturas.id';
+		ON detalle_matriculas.asignatura_id=asignaturas.id WHERE detalle_matriculas.estado_evaluacion=false';
         $respuesta = DB::select($sql);
         return response()->json(['admin-estudiante' => $respuesta], 200);
     }
