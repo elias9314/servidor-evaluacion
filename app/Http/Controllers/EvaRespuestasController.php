@@ -10,7 +10,7 @@ class EvaRespuestasController extends Controller
 {
     public function getEvaRespuesta(){
         $respuesta= EvaRespuesta::all();
-        return response()->json([$respuesta],200);
+        return response()->json(['respuesta' => $respuesta],200);
     }
     public function getById($id){
         $respuesta = EvaRespuesta::where('id','=',$id)->get();
@@ -18,14 +18,31 @@ class EvaRespuestasController extends Controller
     }
     public function createEvaRespuesta(Request $request){
         $data = $request->json()->all();
-        EvaRespuesta::create($data);
-        return response()->json(['message'=>'Respuesta creado correctamente'],200);
+        $dataRespuesta = $data['Respuesta'];
+        $Respuesta = EvaRespuesta ::create([
+            'codigo' => $dataRespuesta['codigo'],
+            'orden' =>$dataRespuesta['orden'],
+            'nombre' => strtoupper(trim($dataRespuesta['nombre'])),
+            'valor' => $dataRespuesta['valor'],
+            'tipo' => strtoupper(trim($dataRespuesta['tipo'])),
+            'estado' => strtoupper(trim($dataRespuesta['estado']))
+        ]);
+        return response()->json(['respuesta' => $Respuesta],200);
     }
+
     public function updateEvaRespuesta(Request $request){
         $data=$request->json()->all();
-        $respuesta= EvaRespuesta::findOrFail($data['id']);
-        $respuesta->update($data);
-        return response()->json([$respuesta],200);
+        $dataRespuesta = $data['Respuesta'];
+
+        $Respuesta= EvaRespuesta::findOrFail($dataRespuesta['id'])->update([
+            'codigo' => $dataRespuesta['codigo'],
+            'orden' =>$dataRespuesta['orden'],
+            'nombre' => $dataRespuesta['nombre'],
+            'valor' => $dataRespuesta['valor'],
+            'tipo' => $dataRespuesta['tipo'],
+            'estado' =>$dataRespuesta['estado']
+        ]);
+        return response()->json(['respuesta' => $Respuesta],200);
     }
     public function get (){
         $sql= 'SELECT id,codigo,orden,nombre,valor FROM eva_respuestas';
